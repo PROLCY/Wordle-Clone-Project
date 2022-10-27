@@ -1,28 +1,33 @@
 const express = require('express');
 const axios = require('axios');
+const Word = require('../schemas/words');
 
 const router = express.Router();
 
-const wordCorrect = "GREAT";
-
-router.get('/correct', (req, res) => {
+router.get('/correct', async (req, res) => {
+    let random = Math.floor(Math.random() * await Word.count());
+    const wordCorrect = await Word.findOne({}).skip(random);
+    console.log(wordCorrect.word);
     res.send({
-        wordCorrect: wordCorrect
+        wordCorrect: wordCorrect.word
     });
 });
 
-router.post('/isExist', async (req, res) => {
+router.post('/exist', async (req, res) => {
     try {
-        const word = req.body.word;
-        await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-        res.send({
-            isExist: true
-        });
+        const response = await Word.find({ word: req.body.word });
+        
+        if ( !response.length )
+            res.send({
+                exist: false
+            })
+        else
+            res.send({
+                exist: true
+            })
     } catch (error) {
-        res.send({
-            isExist: false
-        });
+        console.error(error);
     }
-})
+});
 
 module.exports = router;
