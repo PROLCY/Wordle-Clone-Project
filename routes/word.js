@@ -1,16 +1,39 @@
 const express = require('express');
 const axios = require('axios');
-const Word = require('../schemas/words');
+const Word = require('../schemas/word');
+
+let wordList = [];
+let keyState = {};
+let wordCorrect;
 
 const router = express.Router();
 
 router.get('/correct', async (req, res) => {
-    let random = Math.floor(Math.random() * await Word.count());
-    const wordCorrect = await Word.findOne({}).skip(random);
-    console.log(wordCorrect.word);
+    if ( !req.session.ip ) {
+
+        req.session.save(function() {
+            req.session.ip = req.ip;
+            console.log(req.session.ip);    
+        })
+
+        let random = Math.floor(Math.random() * await Word.count());
+        const randomWord = await Word.findOne({}).skip(random);
+        wordCorrect = randomWord.word;
+        console.log(wordCorrect);
+    }
     res.send({
-        wordCorrect: wordCorrect.word
+        wordCorrect: wordCorrect,
+        wordList: wordList,
+        keyState: keyState
     });
+});
+
+router.post('/add', (req, res) => {
+    const newWord = req.body.newWord;
+    keyState = req.body.keyState;
+    wordList.push(newWord);
+    console.log(wordList);
+    res.status(200);
 });
 
 router.post('/exist', async (req, res) => {
@@ -21,10 +44,12 @@ router.post('/exist', async (req, res) => {
             res.send({
                 exist: false
             })
-        else
+        else {
             res.send({
                 exist: true
             })
+        }
+            
     } catch (error) {
         console.error(error);
     }
