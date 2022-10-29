@@ -8,7 +8,7 @@ let wordCorrect;
 
 const router = express.Router();
 
-router.get('/correct', async (req, res) => {
+router.get('/', async (req, res) => {
     if ( !req.session.ip ) {
 
         req.session.save(function() {
@@ -38,9 +38,9 @@ router.post('/add', (req, res) => {
 
 router.post('/exist', async (req, res) => {
     try {
-        const response = await Word.find({ word: req.body.word });
+        const wordFound = await Word.find({ word: req.body.word });
         
-        if ( !response.length )
+        if ( !wordFound.length )
             res.send({
                 exist: false
             })
@@ -49,7 +49,6 @@ router.post('/exist', async (req, res) => {
                 exist: true
             })
         }
-            
     } catch (error) {
         console.error(error);
     }
