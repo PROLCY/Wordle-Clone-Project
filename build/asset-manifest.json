@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d34ca6cc.css",
+    "main.js": "/static/js/main.ff8cc71d.js",
+    "static/js/787.b7eb5c8c.chunk.js": "/static/js/787.b7eb5c8c.chunk.js",
+    "static/media/howTo.svg": "/static/media/howTo.72d3ebd85a1ba2d14b0d4135e741eece.svg",
+    "static/media/option.svg": "/static/media/option.0662109ef2adf025fac75839d6be2c0c.svg",
+    "index.html": "/index.html",
+    "static/media/chart.svg": "/static/media/chart.96e1a561ae3e0aef9adbdb78a2bcf437.svg",
+    "main.d34ca6cc.css.map": "/static/css/main.d34ca6cc.css.map",
+    "main.ff8cc71d.js.map": "/static/js/main.ff8cc71d.js.map",
+    "787.b7eb5c8c.chunk.js.map": "/static/js/787.b7eb5c8c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d34ca6cc.css",
+    "static/js/main.ff8cc71d.js"
+  ]
+}
